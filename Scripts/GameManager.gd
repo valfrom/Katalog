@@ -29,6 +29,7 @@ var _active_level_player: Node = null
 var recently_unlocked_hero: String = ""
 var hero_unlock_return_scene: String = ""
 var selecting_initial_hero: bool = false
+var discovered_levels: Array[String] = []
 
 func _ready():
 	randomize()
@@ -73,6 +74,7 @@ func start_new_game() -> void:
         recently_unlocked_hero = ""
         hero_unlock_return_scene = ""
         selecting_initial_hero = true
+        discovered_levels.clear()
 
 func finalize_initial_hero_selection(hero_id: String) -> void:
         if !selecting_initial_hero:
@@ -130,8 +132,23 @@ func unlock_random_locked_hero() -> String:
 	return newly_unlocked
 
 func prepare_hero_unlock(hero_id: String, return_scene: String) -> void:
-	recently_unlocked_hero = hero_id
-	hero_unlock_return_scene = return_scene
+        recently_unlocked_hero = hero_id
+        hero_unlock_return_scene = return_scene
+
+func mark_level_discovered(scene_path: String) -> void:
+        var normalized_path := _normalize_scene_path(scene_path)
+        if normalized_path == "":
+                return
+
+        if !discovered_levels.has(normalized_path):
+                discovered_levels.append(normalized_path)
+
+func is_level_discovered(scene_path: String) -> bool:
+        var normalized_path := _normalize_scene_path(scene_path)
+        if normalized_path == "":
+                return false
+
+        return discovered_levels.has(normalized_path)
 
 func consume_unlocked_hero() -> String:
 	var hero_id := recently_unlocked_hero
@@ -166,7 +183,7 @@ func _apply_current_hero(_hero_id: String) -> void:
 		_active_level_player.apply_hero(hero)
 
 func handle_level_player_death(player: Node) -> void:
-	await player.death_tween()
+        await player.death_tween()
 
 	if advance_to_next_hero():
 		_apply_current_hero(current_hero_id)
@@ -176,8 +193,21 @@ func handle_level_player_death(player: Node) -> void:
 	current_hero_queue.clear()
 	current_hero_id = ""
 
-	if saved_scene_path != "":
-		mark_restore_player_position()
-		SceneTransition.load_scene(saved_scene_path)
-	else:
-		await player.play_respawn()
+        if saved_scene_path != "":
+                mark_restore_player_position()
+                SceneTransition.load_scene(saved_scene_path)
+        else:
+                await player.play_respawn()
+
+func _normalize_scene_path(scene_path: String) -> String:
+        if scene_path == "":
+                return ""
+
+        if scene_path.begins_with("uid://"):
+                return scene_path
+
+        var uid := ResourceLoader.get_resource_uid(scene_path)
+        if uid != 0:
+                return ResourceUID.id_to_text(uid)
+
+        return scene_path
