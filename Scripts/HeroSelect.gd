@@ -9,6 +9,8 @@ extends Node2D
 var portrait_entries: Array = []
 var portrait_size: Vector2 = Vector2.ZERO
 var selected_index := 0
+var move_tween: Tween = null
+const CURSOR_MOVE_TIME := 0.2
 
 func _ready() -> void:
     _build_gallery()
@@ -95,8 +97,13 @@ func _update_selection() -> void:
     var entry: Dictionary = portrait_entries[selected_index]
     var target_position: Vector2 = entry["node"].global_position
 
-    cursor_frame.position = target_position
-    cursor_panel.position = -cursor_panel.size / 2.0
+    if move_tween:
+        move_tween.kill()
+    move_tween = create_tween()
+    move_tween.tween_property(cursor_frame, "position", target_position, CURSOR_MOVE_TIME)
+    move_tween.parallel().tween_property(cursor_panel, "position", -cursor_panel.size / 2.0, CURSOR_MOVE_TIME)
+    move_tween.set_trans(Tween.TRANS_CUBIC)
+    move_tween.set_ease(Tween.EASE_OUT)
 
     camera.position = target_position
 
