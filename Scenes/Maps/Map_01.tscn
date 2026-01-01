@@ -53,7 +53,7 @@ use_hero_select = true
 z_index = 1
 position = Vector2(145, 681)
 scale = Vector2(0.5, 0.5)
-next_scene_path = "uid://cjanwm3sy2x37"
+next_scene_path = "uid://bhqpeko061hfd"
 use_hero_select = true
 
 [node name="GameManager" type="Node2D" parent="." unique_id=270385406]

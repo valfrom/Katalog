@@ -131,11 +131,11 @@ func _select_current_hero() -> void:
 		_select_hero(entry["hero_id"])
 
 func _select_hero(hero_id: String) -> void:
-                GameManager.finalize_initial_hero_selection(hero_id)
-                GameManager.prepare_hero_run(hero_id)
-                var target_scene := GameManager.pending_level_scene
-                if target_scene == "":
-                                target_scene = GameManager.saved_scene_path
-                if target_scene == "":
-                                target_scene = "res://Scenes/Maps/Map_01.tscn"
-                SceneTransition.load_scene(target_scene)
+				GameManager.finalize_initial_hero_selection(hero_id)
+				GameManager.prepare_hero_run(hero_id)
+				var target_scene := GameManager.pending_level_scene
+				if target_scene == "":
+								target_scene = GameManager.saved_scene_path
+				if target_scene == "":
+								target_scene = "res://Scenes/Maps/Map_01.tscn"
+				SceneTransition.load_scene(target_scene)
