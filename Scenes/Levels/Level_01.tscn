@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://cyti38f0lagf2" path="res://Scenes/Prefabs/LevelFinishDoor.tscn" id="1_oqkjg"]
 [ext_resource type="PackedScene" uid="uid://w7m6tehvvy3g" path="res://Scenes/Prefabs/Player.tscn" id="2_pay8t"]
-[ext_resource type="PackedScene" uid="uid://bfmh3fm2de78o" path="res://Scenes/Prefabs/Coin.tscn" id="3_rrh80"]
 [ext_resource type="Script" uid="uid://c2nubbagwtn3t" path="res://Scripts/Camera.gd" id="4_5vjlm"]
 [ext_resource type="Script" uid="uid://dbrlmxldbxker" path="res://Scripts/GameManager.gd" id="4_vgfkr"]
 [ext_resource type="Texture2D" uid="uid://n1oecu4o55dt" path="res://Assets/Tiles/Pixel_Platformer_Tileset_Pack/Background/sky_solid_color.png" id="5_1bssr"]
@@ -18,8 +17,9 @@
 
 [node name="LevelFinishDoor" parent="." unique_id=1998927167 instance=ExtResource("1_oqkjg")]
 z_index = 1
-position = Vector2(1008, -368)
-next_scene_path = "uid://bjb3dx2x4bocm"
+position = Vector2(1992, 489)
+scale = Vector2(0.5, 0.5)
+next_scene_path = "uid://l7yes88exhc8"
 
 [node name="Player" parent="." unique_id=81063507 instance=ExtResource("2_pay8t")]
 z_index = 1
@@ -43,15 +43,6 @@ editor_draw_drag_margin = true
 script = ExtResource("4_5vjlm")
 
 [node name="Coins" type="Node2D" parent="." unique_id=2062749587]
-
-[node name="Coin" parent="Coins" unique_id=1166187790 instance=ExtResource("3_rrh80")]
-position = Vector2(576, 496)
-
-[node name="Coin2" parent="Coins" unique_id=1679914007 instance=ExtResource("3_rrh80")]
-position = Vector2(688, 458)
-
-[node name="Coin3" parent="Coins" unique_id=1188185854 instance=ExtResource("3_rrh80")]
-position = Vector2(844, 408)
 
 [node name="Level" type="Node2D" parent="." unique_id=1903870408]
 
