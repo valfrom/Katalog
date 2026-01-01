@@ -50,16 +50,16 @@ var hero_id: String = ""
 @onready var originalScale = self.scale
 
 func _ready() -> void:
-        randomize()
-        floor_snap_length = slope_snap_length
+		randomize()
+		floor_snap_length = slope_snap_length
 
-        _jump_buffer_timer.one_shot = true
-        _jump_buffer_timer.wait_time = float(jump_buffer_ms) / 1000.0
-        add_child(_jump_buffer_timer)
-        _jump_buffer_timer.timeout.connect(_on_jump_buffer_timeout)
-        GameManager.register_level_player(self)
-        if hero_id == "":
-                hero_id = GameManager.current_hero_id
+		_jump_buffer_timer.one_shot = true
+		_jump_buffer_timer.wait_time = float(jump_buffer_ms) / 1000.0
+		add_child(_jump_buffer_timer)
+		_jump_buffer_timer.timeout.connect(_on_jump_buffer_timeout)
+		GameManager.register_level_player(self)
+		if hero_id == "":
+				hero_id = GameManager.current_hero_id
 
 func _physics_process(delta: float) -> void:
 	movement(delta)
@@ -212,30 +212,30 @@ func player_animations(delta: float) -> void:
 			player_sprite.play("jump_up")
 
 func flip_player() -> void:
-        if velocity.x < 0.0:
-                player_sprite.flip_h = false
-        elif velocity.x > 0.0:
-                player_sprite.flip_h = true
+		if velocity.x < 0.0:
+				player_sprite.flip_h = false
+		elif velocity.x > 0.0:
+				player_sprite.flip_h = true
 
 func death_tween() -> void:
-        var tween = create_tween()
-        tween.tween_property(self, "scale", Vector2.ZERO, 0.15)
-        await tween.finished
-        global_position = spawn_point.global_position
+		var tween = create_tween()
+		tween.tween_property(self, "scale", Vector2.ZERO, 0.15)
+		await tween.finished
+		global_position = spawn_point.global_position
 
 func play_respawn() -> void:
-        await get_tree().create_timer(0.3).timeout
-        AudioManager.respawn_sfx.play()
-        var tween = create_tween()
-        tween.tween_property(self, "scale", originalScale, 0.15)
+		await get_tree().create_timer(0.3).timeout
+		AudioManager.respawn_sfx.play()
+		var tween = create_tween()
+		tween.tween_property(self, "scale", originalScale, 0.15)
 
 func apply_hero(hero: Dictionary) -> void:
-        hero_id = hero.get("id", "")
-        if hero.has("color"):
-                player_sprite.modulate = hero["color"]
+		hero_id = hero.get("id", "")
+		if hero.has("color"):
+				player_sprite.modulate = hero["color"]
 
 func _on_collision_body_entered(_body) -> void:
-        if _body.is_in_group("Traps"):
-                AudioManager.death_sfx.play()
-                death_particles.emitting = true
-                await GameManager.handle_level_player_death(self)
+		if _body.is_in_group("Traps"):
+				AudioManager.death_sfx.play()
+				death_particles.emitting = true
+				await GameManager.handle_level_player_death(self)
