@@ -13,7 +13,10 @@ extends CharacterBody2D
 
 func _ready() -> void:
         randomize()
-        global_position = spawn_point.global_position
+        if GameManager.consume_restore_flag():
+                global_position = GameManager.saved_player_position
+        else:
+                global_position = spawn_point.global_position
 
 func _physics_process(delta: float) -> void:
         var input_dir := Input.get_vector("Left", "Right", "Up", "Down")
