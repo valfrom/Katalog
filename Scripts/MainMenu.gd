@@ -52,6 +52,8 @@ func _activate_current_option() -> void:
             get_tree().quit()
 
 func _start_new_game() -> void:
+    GameManager.unlock_all_heroes()
+    GameManager.pending_level_scene = "res://Scenes/Maps/Map_01.tscn"
     SceneTransition.load_scene(GameManager.HERO_SELECT_SCENE_PATH)
 
 func _continue_game() -> void:

@@ -55,9 +55,14 @@ func consume_restore_flag() -> bool:
 	return should_restore
 
 func _ensure_default_hero() -> void:
-	if unlocked_heroes.is_empty():
-		unlocked_heroes.append(HERO_ROSTER[0]["id"])
-		current_hero_id = HERO_ROSTER[0]["id"]
+        if unlocked_heroes.is_empty():
+                unlocked_heroes.append(HERO_ROSTER[0]["id"])
+                current_hero_id = HERO_ROSTER[0]["id"]
+
+func unlock_all_heroes() -> void:
+        unlocked_heroes.clear()
+        for hero in HERO_ROSTER:
+                unlocked_heroes.append(hero["id"])
 
 func get_hero_definition(hero_id: String) -> Dictionary:
 	for hero in HERO_ROSTER:
