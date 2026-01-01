@@ -17,6 +17,7 @@ scale = Vector2(0.5, 0.5)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=345380583]
 position = Vector2(16, 36)
+current = true
 limit_left = 0
 limit_bottom = 705
 limit_smoothed = true
