@@ -47,190 +47,202 @@ var _jumped_this_frame := false
 @onready var death_particles = $DeathParticles
 @onready var _jump_buffer_timer: Timer = Timer.new()
 @onready var originalScale = self.scale
+var active_hero: Dictionary = {}
 
 func _ready() -> void:
-	randomize()
-	floor_snap_length = slope_snap_length
+    randomize()
+    floor_snap_length = slope_snap_length
+    GameManager.ensure_run_initialized(get_tree().current_scene.scene_file_path)
+    GameManager.apply_current_hero(self)
 
-	_jump_buffer_timer.one_shot = true
-	_jump_buffer_timer.wait_time = float(jump_buffer_ms) / 1000.0
-	add_child(_jump_buffer_timer)
-	_jump_buffer_timer.timeout.connect(_on_jump_buffer_timeout)
+    _jump_buffer_timer.one_shot = true
+    _jump_buffer_timer.wait_time = float(jump_buffer_ms) / 1000.0
+    add_child(_jump_buffer_timer)
+    _jump_buffer_timer.timeout.connect(_on_jump_buffer_timeout)
 
 func _physics_process(delta: float) -> void:
-	movement(delta)
-	player_animations(delta)
-	flip_player()
+    movement(delta)
+    player_animations(delta)
+    flip_player()
 
 func movement(delta: float) -> void:
-	_jumped_this_frame = false
-	_is_walking = Input.is_action_pressed("Walk")
+    _jumped_this_frame = false
+    _is_walking = Input.is_action_pressed("Walk")
 
-	if is_on_floor():
-		_coyote_left = float(coyote_ms) / 1000.0
-		jump_count = max_jump_count
-		_try_consume_buffered_jump()
-	else:
-		_coyote_left = max(0.0, _coyote_left - delta)
-		velocity.y += gravity * delta
+    if is_on_floor():
+        _coyote_left = float(coyote_ms) / 1000.0
+        jump_count = max_jump_count
+        _try_consume_buffered_jump()
+    else:
+        _coyote_left = max(0.0, _coyote_left - delta)
+        velocity.y += gravity * delta
 
-	_handle_jump_input()
+    _handle_jump_input()
 
-	_is_sliding = Input.is_action_pressed("Down") && is_on_floor() && _is_on_slope() && slide_speed > 0.0
+    _is_sliding = Input.is_action_pressed("Down") && is_on_floor() && _is_on_slope() && slide_speed > 0.0
 
-	if _is_sliding:
-		var target := _downhill_dir() * slide_speed
-		velocity = velocity.move_toward(target, slide_acceleration * delta)
-		if !_jumped_this_frame:
-			apply_floor_snap()
-		move_and_slide()
-		return
+    if _is_sliding:
+        var target := _downhill_dir() * slide_speed
+        velocity = velocity.move_toward(target, slide_acceleration * delta)
+        if !_jumped_this_frame:
+            apply_floor_snap()
+        move_and_slide()
+        return
 
-	var input_axis := Input.get_axis("Left", "Right")
-	var speed := walk_speed if _is_walking else move_speed
-	var target_vx := input_axis * speed
+    var input_axis := Input.get_axis("Left", "Right")
+    var speed := walk_speed if _is_walking else move_speed
+    var target_vx := input_axis * speed
 
-	if absf(target_vx) > 0.0:
-		velocity.x = move_toward(velocity.x, target_vx, acceleration * delta)
-	else:
-		velocity.x = move_toward(velocity.x, 0.0, deceleration * delta)
+    if absf(target_vx) > 0.0:
+        velocity.x = move_toward(velocity.x, target_vx, acceleration * delta)
+    else:
+        velocity.x = move_toward(velocity.x, 0.0, deceleration * delta)
 
-	if is_on_floor() && !_jumped_this_frame:
-		velocity.y = 0.0
-		apply_floor_snap()
+    if is_on_floor() && !_jumped_this_frame:
+        velocity.y = 0.0
+        apply_floor_snap()
 
-	move_and_slide()
+    move_and_slide()
 
 func _is_on_slope() -> bool:
-	var n := get_floor_normal()
-	return absf(n.x) > min_slope_x
+    var n := get_floor_normal()
+    return absf(n.x) > min_slope_x
 
 func _downhill_dir() -> Vector2:
-	var n := get_floor_normal().normalized()
-	var t := Vector2(n.y, -n.x).normalized()
-	if t.y > 0.0:
-		return t
-	return -t
+    var n := get_floor_normal().normalized()
+    var t := Vector2(n.y, -n.x).normalized()
+    if t.y > 0.0:
+        return t
+    return -t
 
 func _handle_jump_input() -> void:
-	if !Input.is_action_just_pressed("Jump"):
-		return
+    if !Input.is_action_just_pressed("Jump"):
+        return
 
-	if _can_jump_now():
-		_do_jump_now()
-		return
+    if _can_jump_now():
+        _do_jump_now()
+        return
 
-	_buffer_jump()
+    _buffer_jump()
 
 func _buffer_jump() -> void:
-	_jump_buffered = true
-	_jump_buffer_timer.start()
+    _jump_buffered = true
+    _jump_buffer_timer.start()
 
 func _try_consume_buffered_jump() -> void:
-	if !_jump_buffered:
-		return
-	if !_can_jump_now():
-		return
+    if !_jump_buffered:
+        return
+    if !_can_jump_now():
+        return
 
-	_jump_buffered = false
-	_jump_buffer_timer.stop()
-	_do_jump_now()
+    _jump_buffered = false
+    _jump_buffer_timer.stop()
+    _do_jump_now()
 
 func _can_jump_now() -> bool:
-	var grounded_like := is_on_floor() || _coyote_left > 0.0
+    var grounded_like := is_on_floor() || _coyote_left > 0.0
 
-	if grounded_like && !double_jump:
-		return true
-	if double_jump:
-		if grounded_like:
-			return true
-		if jump_count > 0:
-			return true
+    if grounded_like && !double_jump:
+        return true
+    if double_jump:
+        if grounded_like:
+            return true
+        if jump_count > 0:
+            return true
 
-	return false
+    return false
 
 func _do_jump_now() -> void:
-	var grounded_like := is_on_floor() || _coyote_left > 0.0
+    var grounded_like := is_on_floor() || _coyote_left > 0.0
 
-	if double_jump && !grounded_like:
-		jump_count -= 1
+    if double_jump && !grounded_like:
+        jump_count -= 1
 
-	_coyote_left = 0.0
-	_jumped_this_frame = true
-	_is_sliding = false
-	jump()
+    _coyote_left = 0.0
+    _jumped_this_frame = true
+    _is_sliding = false
+    jump()
 
 func _on_jump_buffer_timeout() -> void:
-	_jump_buffered = false
+    _jump_buffered = false
 
 func jump() -> void:
-	AudioManager.jump_sfx.play()
-	velocity.y = -jump_force
+    AudioManager.jump_sfx.play()
+    velocity.y = -jump_force
 
 func player_animations(delta: float) -> void:
-	particle_trails.emitting = false
+    particle_trails.emitting = false
 
-	if is_on_floor() && _is_sliding:
-		_idle_time = 0.0
-		player_sprite.speed_scale = 1.0
-		player_sprite.play("slide")
-		return
+    if is_on_floor() && _is_sliding:
+        _idle_time = 0.0
+        player_sprite.speed_scale = 1.0
+        player_sprite.play("slide")
+        return
 
-	var speed_x = abs(velocity.x)
+    var speed_x = abs(velocity.x)
 
-	if is_on_floor():
-		if speed_x > 0.0:
-			_idle_time = 0.0
-			if _is_walking:
-				var t = clamp(speed_x / walk_speed, 0.0, 1.0)
-				player_sprite.speed_scale = lerp(walk_anim_min_speed, walk_anim_max_speed, t)
-				player_sprite.play("walk")
-			else:
-				var t = clamp(speed_x / move_speed, 0.0, 1.0)
-				player_sprite.speed_scale = lerp(run_anim_min_speed, run_anim_max_speed, t)
-				particle_trails.emitting = true
-				player_sprite.play("run", 1.5)
-		else:
-			player_sprite.speed_scale = 1.0
-			_idle_time += delta
+    if is_on_floor():
+        if speed_x > 0.0:
+            _idle_time = 0.0
+            if _is_walking:
+                var t = clamp(speed_x / walk_speed, 0.0, 1.0)
+                player_sprite.speed_scale = lerp(walk_anim_min_speed, walk_anim_max_speed, t)
+                player_sprite.play("walk")
+            else:
+                var t = clamp(speed_x / move_speed, 0.0, 1.0)
+                player_sprite.speed_scale = lerp(run_anim_min_speed, run_anim_max_speed, t)
+                particle_trails.emitting = true
+                player_sprite.play("run", 1.5)
+        else:
+            player_sprite.speed_scale = 1.0
+            _idle_time += delta
 
-			if _idle_time >= idle_variant_delay_s:
-				if player_sprite.animation != "idle_1" && player_sprite.animation != "idle_2":
-					player_sprite.play("idle_1" if randi() % 2 == 0 else "idle_2")
-			else:
-				player_sprite.play("idle")
-	else:
-		_idle_time = 0.0
-		player_sprite.speed_scale = 1.0
-		if velocity.y > 0.0:
-			player_sprite.play("jump_down")
-		else:
-			player_sprite.play("jump_up")
+            if _idle_time >= idle_variant_delay_s:
+                if player_sprite.animation != "idle_1" && player_sprite.animation != "idle_2":
+                    player_sprite.play("idle_1" if randi() % 2 == 0 else "idle_2")
+            else:
+                player_sprite.play("idle")
+    else:
+        _idle_time = 0.0
+        player_sprite.speed_scale = 1.0
+        if velocity.y > 0.0:
+            player_sprite.play("jump_down")
+        else:
+            player_sprite.play("jump_up")
 
 func flip_player() -> void:
-	if velocity.x < 0.0:
-		player_sprite.flip_h = false
-	elif velocity.x > 0.0:
-		player_sprite.flip_h = true
+    if velocity.x < 0.0:
+        player_sprite.flip_h = false
+    elif velocity.x > 0.0:
+        player_sprite.flip_h = true
 
 func death_tween() -> void:
-	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2.ZERO, 0.15)
-	await tween.finished
-	global_position = spawn_point.global_position
-	await get_tree().create_timer(0.3).timeout
-	AudioManager.respawn_sfx.play()
-	respawn_tween()
+    var tween = create_tween()
+    tween.tween_property(self, "scale", Vector2.ZERO, 0.15)
+    await tween.finished
 
 func respawn_tween() -> void:
-	global_position = spawn_point.global_position
-	var tween = create_tween()
-	tween.stop()
-	tween.play()
-	tween.tween_property(self, "scale", originalScale, 0.15)
+    var tween = create_tween()
+    tween.stop()
+    tween.play()
+    tween.tween_property(self, "scale", originalScale, 0.15)
+    AudioManager.respawn_sfx.play()
+
+func respawn_with_hero(hero_data: Dictionary) -> void:
+    scale = Vector2.ZERO
+    global_position = spawn_point.global_position
+    apply_hero_visual(hero_data)
+    respawn_tween()
+
+func apply_hero_visual(hero_data: Dictionary) -> void:
+    active_hero = hero_data
+    if hero_data.has("color"):
+        player_sprite.modulate = hero_data["color"]
+    else:
+        player_sprite.modulate = Color.WHITE
 
 func _on_collision_body_entered(_body) -> void:
-	if _body.is_in_group("Traps"):
-		AudioManager.death_sfx.play()
-		death_particles.emitting = true
-		death_tween()
+    if _body.is_in_group("Traps"):
+        AudioManager.death_sfx.play()
+        death_particles.emitting = true
+        await GameManager.handle_player_death(self)

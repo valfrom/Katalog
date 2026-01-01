@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=4 uid="uid://heroselectscene"]
+
+[ext_resource type="Script" path="res://Scripts/HeroSelect.gd" id="1_5y127"]
+
+[node name="HeroSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5y127")
+
+[node name="MarginContainer" type="MarginContainer" parent="HeroSelect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HeroSelect/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 16
+
+[node name="Title" type="Label" parent="HeroSelect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Choose your hero"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeroGrid" type="GridContainer" parent="HeroSelect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="HeroDescription" type="Label" parent="HeroSelect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Select a hero to start the run"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="HeroSelect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Start"
+disabled = true
+
+[connection signal="pressed" from="HeroSelect/MarginContainer/VBoxContainer/StartButton" to="HeroSelect" method="_on_StartButton_pressed"]
