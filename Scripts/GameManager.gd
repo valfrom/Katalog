@@ -11,8 +11,8 @@ const HERO_ROSTER := [
 {"id": "bolt", "name": "Bolt", "color": Color(0.97, 0.71, 0.2), "portrait_path": "res://Assets/Sprites/Portraits/Mechanic.png"},
 {"id": "ivy", "name": "Ivy", "color": Color(0.32, 0.73, 0.39), "portrait_path": "res://Assets/Sprites/Portraits/Mage.png"},
 {"id": "frost", "name": "Frost", "color": Color(0.4, 0.71, 0.93), "portrait_path": "res://Assets/Sprites/Portraits/Cyborg.png"},
-{"id": "ember", "name": "Ember", "color": Color(0.93, 0.48, 0.32), "portrait_path": "res://Assets/Sprites/Portraits/Slice 1.png"},
-{"id": "void", "name": "Void", "color": Color(0.65, 0.58, 0.9), "portrait_path": "res://Assets/Sprites/Portraits/Mage.png"}
+{"id": "ember", "name": "Ember", "color": Color(0.93, 0.48, 0.32), "portrait_path": "res://Assets/Sprites/Portraits/Ranger.png"},
+{"id": "void", "name": "Void", "color": Color(0.65, 0.58, 0.9), "portrait_path": "res://Assets/Sprites/Portraits/Vampire.png"}
 ]
 
 var score : int = 0
