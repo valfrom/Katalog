@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://clreg520jah1j" path="res://Assets/platformPack_item008.png" id="6_ibvhe"]
 [ext_resource type="FontFile" uid="uid://qgc4vi5osk7v" path="res://Assets/Fonts/Star Choco.ttf" id="7_pulu1"]
 
-[node name="Level_01" type="Node2D" unique_id=283502532]
+[node name="Level_02" type="Node2D" unique_id=283502532]
 
 [node name="Player" parent="." unique_id=81063507 instance=ExtResource("1_je8nv")]
 z_index = 1
@@ -45,6 +45,12 @@ tile_set = ExtResource("3_2tkw3")
 [node name="LevelFinishDoor" parent="Level" unique_id=277666021 instance=ExtResource("3_7p701")]
 z_index = 1
 position = Vector2(145, 457)
+scale = Vector2(0.5, 0.5)
+next_scene_path = "uid://cjanwm3sy2x37"
+
+[node name="LevelFinishDoor2" parent="Level" unique_id=508136980 instance=ExtResource("3_7p701")]
+z_index = 1
+position = Vector2(145, 681)
 scale = Vector2(0.5, 0.5)
 next_scene_path = "uid://cjanwm3sy2x37"
 
