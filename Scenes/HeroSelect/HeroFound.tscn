@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://herofoundscene"]
+[gd_scene format=3 uid="uid://c5eg4dnqrr4ny"]
 
 [ext_resource type="Script" path="res://Scripts/HeroFound.gd" id="1_j2m5o"]
 
