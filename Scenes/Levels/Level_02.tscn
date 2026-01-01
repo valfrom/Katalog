@@ -1,0 +1,173 @@
+[gd_scene format=4 uid="uid://bhqpeko061hfd"]
+
+[ext_resource type="PackedScene" uid="uid://cyti38f0lagf2" path="res://Scenes/Prefabs/LevelFinishDoor.tscn" id="1_oqkjg"]
+[ext_resource type="PackedScene" uid="uid://w7m6tehvvy3g" path="res://Scenes/Prefabs/Player.tscn" id="2_pay8t"]
+[ext_resource type="Script" uid="uid://c2nubbagwtn3t" path="res://Scripts/Camera.gd" id="4_5vjlm"]
+[ext_resource type="Script" uid="uid://dbrlmxldbxker" path="res://Scripts/GameManager.gd" id="4_vgfkr"]
+[ext_resource type="Texture2D" uid="uid://n1oecu4o55dt" path="res://Assets/Tiles/Pixel_Platformer_Tileset_Pack/Background/sky_solid_color.png" id="5_1bssr"]
+[ext_resource type="TileSet" uid="uid://b08ty2t55aj6x" path="res://Assets/Tiles/Pixel_Platformer_Tileset_Pack/pixel_platform_01_tileset_final.tres" id="5_5vjlm"]
+[ext_resource type="Script" uid="uid://utaofe3yopd6" path="res://Scripts/GameUI.gd" id="6_66mfc"]
+[ext_resource type="Texture2D" uid="uid://ubmry4f6muf3" path="res://Assets/Tiles/Pixel_Platformer_Tileset_Pack/Background/mountain_depth_z_1.png" id="6_xpj05"]
+[ext_resource type="Texture2D" uid="uid://b1nkrxm5vw1my" path="res://Assets/Tiles/Pixel_Platformer_Tileset_Pack/Background/mountain_depth_z_2.png" id="7_i7ntp"]
+[ext_resource type="Texture2D" uid="uid://clreg520jah1j" path="res://Assets/platformPack_item008.png" id="7_j7jun"]
+[ext_resource type="FontFile" uid="uid://qgc4vi5osk7v" path="res://Assets/Fonts/Star Choco.ttf" id="8_gwcy2"]
+[ext_resource type="Texture2D" uid="uid://dpi7xw20cwgm7" path="res://Assets/Tiles/Pixel_Platformer_Tileset_Pack/Background/clouds.png" id="8_jt6p5"]
+
+[node name="Level_01" type="Node2D" unique_id=283502532]
+
+[node name="LevelFinishDoor" parent="." unique_id=1998927167 instance=ExtResource("1_oqkjg")]
+z_index = 1
+position = Vector2(1992, 489)
+scale = Vector2(0.5, 0.5)
+next_scene_path = "back"
+
+[node name="Player" parent="." unique_id=81063507 instance=ExtResource("2_pay8t")]
+z_index = 1
+position = Vector2(142, 510)
+scale = Vector2(0.5, 0.5)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=345380583]
+position = Vector2(16, 36)
+limit_left = 0
+limit_bottom = 705
+limit_smoothed = true
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.4
+drag_top_margin = 0.4
+drag_right_margin = 0.4
+drag_bottom_margin = 0.4
+editor_draw_limits = true
+editor_draw_drag_margin = true
+script = ExtResource("4_5vjlm")
+
+[node name="Coins" type="Node2D" parent="." unique_id=2062749587]
+
+[node name="Level" type="Node2D" parent="." unique_id=1903870408]
+
+[node name="Background" type="Sprite2D" parent="Level" unique_id=1683576130]
+
+[node name="ParallaxSky" type="Parallax2D" parent="Level/Background" unique_id=1418032086]
+z_index = -1
+scroll_scale = Vector2(0, 0)
+repeat_size = Vector2(1152, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Level/Background/ParallaxSky" unique_id=53432089]
+z_index = -1
+position = Vector2(0, 344)
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Level/Background/ParallaxSky/Sprite2D" unique_id=1871943641]
+position = Vector2(1305.5, -13.5)
+scale = Vector2(5.095703, 4.729373)
+texture = ExtResource("5_1bssr")
+
+[node name="ParallaxClouds" type="Parallax2D" parent="Level/Background" unique_id=273351044]
+z_index = -1
+scroll_scale = Vector2(0.1, 0.1)
+repeat_size = Vector2(1305, 0)
+autoscroll = Vector2(5, 0)
+repeat_times = 1000
+
+[node name="Sprite2D" type="Sprite2D" parent="Level/Background/ParallaxClouds" unique_id=1569262763]
+z_index = -1
+position = Vector2(0, 344)
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D4" type="Sprite2D" parent="Level/Background/ParallaxClouds/Sprite2D" unique_id=892623286]
+position = Vector2(1305.0435, -300.5)
+scale = Vector2(5.097826, 5.097826)
+texture = ExtResource("8_jt6p5")
+
+[node name="ParallaxMountainsFar" type="Parallax2D" parent="Level/Background" unique_id=176295559]
+z_index = -1
+scroll_scale = Vector2(0.1, 0.1)
+repeat_size = Vector2(1303, 0)
+repeat_times = 1000
+
+[node name="Sprite2D" type="Sprite2D" parent="Level/Background/ParallaxMountainsFar" unique_id=1750493052]
+z_index = -1
+position = Vector2(0, 344)
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Level/Background/ParallaxMountainsFar/Sprite2D" unique_id=2031706235]
+position = Vector2(1303.5, 263.5)
+scale = Vector2(5.0878906, 4.427632)
+texture = ExtResource("6_xpj05")
+
+[node name="ParallaxMountainsNear" type="Parallax2D" parent="Level/Background" unique_id=1121372081]
+z_index = -1
+scroll_scale = Vector2(0.2, 0.2)
+repeat_size = Vector2(1304, 0)
+repeat_times = 1000
+
+[node name="Sprite2D" type="Sprite2D" parent="Level/Background/ParallaxMountainsNear" unique_id=1478546825]
+z_index = -1
+position = Vector2(0, 344)
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Level/Background/ParallaxMountainsNear/Sprite2D" unique_id=74991150]
+position = Vector2(1305.5001, 362.49994)
+scale = Vector2(5.095703, 4.729373)
+texture = ExtResource("7_i7ntp")
+
+[node name="Ground" type="TileMapLayer" parent="Level" unique_id=501791184]
+tile_map_data = PackedByteArray("AAACABIAAQADAAIAAAADABIAAQAEAAIAAAAEABIAAQAEAAIAAAAFABIAAQAEAAIAAAAGABIAAQAEAAIAAAAHABIAAQAEAAIAAAAIABIAAQAEAAIAAAAJABIAAQAFAAIAAAAMABIAAQAEAAUAAAANABIAAQAEAAUAAAAOABIAAQAEAAUAAAAPABIAAQAEAAUAAAAQABIAAQAEAAUAAAARABIAAQAEAAUAAAASABIAAQAEAAUAAAATABIAAQAEAAUAAAAUABIAAQAEAAUAAAAVABIAAQAEAAUAAAAWABIAAQAEAAUAAAAXABIAAQAEAAUAAAAYABIAAQAEAAUAAAAZABIAAQAEAAUAAAAaABIAAQAGAAQAAAAbABIAAQAHAAQAAAAbABMAAQAHAAUAAAAaABMAAQAEAAYAAAAZABMAAQAEAAYAAAAYABMAAQAEAAYAAAAXABMAAQAEAAYAAAAWABMAAQAEAAYAAAAVABMAAQAEAAYAAAAUABMAAQAEAAYAAAATABMAAQAEAAYAAAASABMAAQAEAAYAAAARABMAAQAEAAYAAAAQABMAAQAEAAYAAAAPABMAAQAEAAYAAAAOABMAAQAEAAYAAAANABMAAQAEAAYAAAAMABMAAQAEAAYAAAALABIAAQACAAUAAAALABMAAQACAAYAAAAKABMAAQACAAUAAAAKABQAAQABAAYAAAALABQAAQAEAAYAAAAMABQAAQAEAAYAAAANABQAAQAEAAYAAAAOABQAAQAEAAYAAAAPABQAAQAEAAYAAAAQABQAAQAEAAYAAAARABQAAQAEAAYAAAASABQAAQAEAAYAAAATABQAAQAEAAYAAAAUABQAAQAEAAYAAAAVABQAAQAEAAYAAAAWABQAAQAEAAYAAAAXABQAAQAEAAYAAAAYABQAAQAEAAYAAAAZABQAAQAEAAYAAAAaABQAAQAEAAYAAAAbABQAAQAEAAYAAAAcABMAAQAGAAQAAAAdABQAAQAHAAUAAAAdABMAAQAHAAQAAAAcABQAAQAEAAYAAAAYABEAAQAIAAIAAAAXABEAAQAIAAIAAAAWABEAAQAIAAIAAAAXABAAAQAIAAIAAAAYABAAAQAIAAIAAAAYAA8AAQAIAAIAAAARABEAAQAJAAEAAAATABEAAQAKAAIAAAANABEAAQAHAAIAAAAgABQAAQAEAAUAAAAhABQAAQAEAAUAAAAiABQAAQAEAAUAAAAjABQAAQAEAAUAAAAkABQAAQAEAAUAAAAlABQAAQAEAAUAAAAmABQAAQAEAAUAAAAnABQAAQAEAAUAAAAoABQAAQAEAAUAAAApABQAAQAEAAUAAAAqABQAAQAEAAUAAAArABQAAQAEAAUAAAAsABQAAQAEAAUAAAAtABQAAQAEAAUAAAAuABQAAQAEAAUAAAAvABQAAQAEAAUAAAAwABQAAQAEAAUAAAAxABQAAQAEAAUAAAAyABQAAQAEAAUAAAAzABQAAQAEAAUAAAA0ABQAAQAEAAUAAAA1ABQAAQAEAAUAAAA2ABQAAQAEAAUAAAA5ABAAAQAEAAUAAAA6ABAAAQAEAAUAAAA7ABAAAQAEAAUAAAA8ABAAAQAEAAUAAAA9ABAAAQAEAAUAAAA+ABAAAQAEAAUAAAA3ABIAAQAEAAUAAAA4ABIAAQAEAAUAAAAeABQAAQAEAAUAAAAfABQAAQAEAAUAAAAJABQAAQAEAAUAAAACABQAAQAEAAUAAAADABQAAQAEAAUAAAAEABQAAQAEAAUAAAAFABQAAQAEAAUAAAAGABQAAQAEAAUAAAAHABQAAQAEAAUAAAAIABQAAQAEAAUAAAABABQAAQAEAAUAAAAAABQAAQAPAAUAAAA3ABQAAQAFAAUAAAA3ABUAAQAFAAYAAAA2ABUAAQAEAAYAAAA1ABUAAQAEAAYAAAA0ABUAAQAEAAYAAAAzABUAAQAEAAYAAAAyABUAAQAEAAYAAAAxABUAAQAEAAYAAAAwABUAAQAEAAYAAAAvABUAAQAEAAYAAAAuABUAAQAEAAYAAAAtABUAAQAEAAYAAAAsABUAAQAEAAYAAAArABUAAQAEAAYAAAAqABUAAQAEAAYAAAApABUAAQAEAAYAAAAoABUAAQAEAAYAAAAnABUAAQAEAAYAAAAmABUAAQAEAAYAAAAlABUAAQAEAAYAAAAkABUAAQAEAAYAAAAjABUAAQAEAAYAAAAiABUAAQAEAAYAAAAhABUAAQAEAAYAAAAgABUAAQAEAAYAAAAfABUAAQAEAAYAAAAeABUAAQAEAAYAAAAdABUAAQAEAAYAAAAcABUAAQAEAAYAAAAbABUAAQAEAAYAAAAaABUAAQAEAAYAAAAZABUAAQAEAAYAAAAYABUAAQAEAAYAAAAXABUAAQAEAAYAAAAWABUAAQAEAAYAAAAVABUAAQAEAAYAAAAUABUAAQAEAAYAAAATABUAAQAEAAYAAAASABUAAQAEAAYAAAARABUAAQAEAAYAAAAQABUAAQAEAAYAAAAPABUAAQAEAAYAAAAOABUAAQAEAAYAAAANABUAAQAEAAYAAAAMABUAAQAEAAYAAAALABUAAQAEAAYAAAAKABUAAQAEAAYAAAAJABUAAQAEAAYAAAAIABUAAQAEAAYAAAAHABUAAQAEAAYAAAAGABUAAQAEAAYAAAAFABUAAQAEAAYAAAAEABUAAQAEAAYAAAADABUAAQAEAAYAAAACABUAAQAEAAYAAAABABUAAQAEAAYAAAAAABUAAQADAAYAAAAAABMAAQAPAAUAAAAAABIAAQAPAAUAAAAAABEAAQAPAAUAAAAAABAAAQAPAAUAAAAAAA8AAQAPAAUAAAAAAA4AAQAPAAUAAAAAAA0AAQAPAAUAAAAAAAwAAQAPAAUAAAAAAAsAAQAPAAUAAAA=")
+tile_set = ExtResource("5_5vjlm")
+rendering_quadrant_size = 64
+physics_quadrant_size = 64
+
+[node name="Traps" type="TileMapLayer" parent="Level" unique_id=944323315 groups=["Traps"]]
+tile_map_data = PackedByteArray("AAA4ABUAAQAKAAUAAAA5ABUAAQAKAAUAAAA6ABUAAQAKAAUAAAA7ABUAAQAKAAUAAAA8ABUAAQAKAAUAAAA9ABUAAQAKAAUAAAA+ABUAAQAKAAUAAAA/ABUAAQAKAAUAAABAABUAAQAKAAUAAABBABUAAQAKAAUAAABCABUAAQAKAAUAAABDABUAAQAKAAUAAABEABUAAQAKAAUAAABFABUAAQAKAAUAAABGABUAAQAKAAUAAABHABUAAQAKAAUAAAA=")
+tile_set = ExtResource("5_5vjlm")
+rendering_quadrant_size = 64
+physics_quadrant_size = 64
+
+[node name="SpawnPoint" type="Marker2D" parent="Level" unique_id=1482261080]
+unique_name_in_owner = true
+position = Vector2(142, 510)
+
+[node name="GameManager" type="Node2D" parent="." unique_id=270385406]
+script = ExtResource("4_vgfkr")
+
+[node name="UserInterface" type="CanvasLayer" parent="." unique_id=687388738]
+
+[node name="GameUI" type="Control" parent="UserInterface" unique_id=1626153032]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_66mfc")
+
+[node name="Score" type="Control" parent="UserInterface/GameUI" unique_id=1609988282]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScoreTexture" type="TextureRect" parent="UserInterface/GameUI/Score" unique_id=1916178483]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 116.0
+offset_bottom = 116.0
+texture = ExtResource("7_j7jun")
+stretch_mode = 4
+
+[node name="ScoreLabel" type="Label" parent="UserInterface/GameUI/Score" unique_id=658437984]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 104.0
+offset_top = 42.0
+offset_right = 148.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(0.910156, 0.730469, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("8_gwcy2")
+theme_override_font_sizes/font_size = 32
+text = "x 3"
