@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://l7yes88exhc8"]
 
-[ext_resource type="PackedScene" uid="uid://w7m6tehvvy3g" path="res://Scenes/Prefabs/Player.tscn" id="1_je8nv"]
+[ext_resource type="PackedScene" uid="uid://12yssag0vuvj" path="res://Scenes/Prefabs/TopDownPlayer.tscn" id="1_je8nv"]
 [ext_resource type="Script" uid="uid://c2nubbagwtn3t" path="res://Scripts/Camera.gd" id="2_7p701"]
 [ext_resource type="TileSet" uid="uid://f0wwkyqj68gl" path="res://Assets/Tiles/Castle/Castle2.tres" id="3_2tkw3"]
 [ext_resource type="Script" uid="uid://dbrlmxldbxker" path="res://Scripts/GameManager.gd" id="4_445ie"]
