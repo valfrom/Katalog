@@ -1,0 +1,110 @@
+[gd_scene load_steps=3 format=3 uid="uid://herofoundscene"]
+
+[ext_resource type="Script" path="res://Scripts/HeroFound.gd" id="1_j2m5o"]
+
+[sub_resource type="Animation" id="Animation_x4cga"]
+resource_name = "reveal"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("CenterContainer/Content")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.9, 1.2),
+"transitions": PackedFloat32Array(0.8, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.4, 0.4), Vector2(1.1, 1.1), Vector2(0.95, 0.95), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CenterContainer/Content/Portrait")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.8), Color(1, 1, 1, 1)]
+}
+
+[node name="HeroFound" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+script = ExtResource("1_j2m5o")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+color = Color(0.14, 0.14, 0.14, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+
+[node name="Content" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -220.0
+offset_right = 180.0
+offset_bottom = 220.0
+alignment = 1
+
+[node name="Title" type="Label" parent="CenterContainer/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "New Hero Found!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Portrait" type="TextureRect" parent="CenterContainer/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(360, 360)
+stretch_mode = 6
+
+[node name="HeroName" type="Label" parent="CenterContainer/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hero"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="CenterContainer/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Continue"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath(".")
+animations/reveal = SubResource("Animation_x4cga")
+
+[connection signal="pressed" from="CenterContainer/Content/ContinueButton" to="." method="_on_continue_button_pressed"]
