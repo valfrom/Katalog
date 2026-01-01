@@ -28,6 +28,7 @@ var current_hero_id: String = ""
 var _active_level_player: Node = null
 var recently_unlocked_hero: String = ""
 var hero_unlock_return_scene: String = ""
+var selecting_initial_hero: bool = false
 
 func _ready():
 	randomize()
@@ -55,9 +56,36 @@ func consume_restore_flag() -> bool:
 	return should_restore
 
 func _ensure_default_hero() -> void:
-	if unlocked_heroes.is_empty():
-		unlocked_heroes.append(HERO_ROSTER[0]["id"])
-		current_hero_id = HERO_ROSTER[0]["id"]
+        if unlocked_heroes.is_empty():
+                unlocked_heroes.append(HERO_ROSTER[0]["id"])
+                current_hero_id = HERO_ROSTER[0]["id"]
+
+func start_new_game() -> void:
+        unlocked_heroes.clear()
+        for hero in HERO_ROSTER:
+                unlocked_heroes.append(hero.get("id", ""))
+        current_hero_queue.clear()
+        current_hero_id = ""
+        saved_scene_path = ""
+        saved_player_position = Vector2.ZERO
+        restore_player_position = false
+        pending_level_scene = "res://Scenes/Maps/Map_01.tscn"
+        recently_unlocked_hero = ""
+        hero_unlock_return_scene = ""
+        selecting_initial_hero = true
+
+func finalize_initial_hero_selection(hero_id: String) -> void:
+        if !selecting_initial_hero:
+                return
+
+        var target_hero := hero_id
+        if get_hero_definition(target_hero).is_empty():
+                target_hero = HERO_ROSTER[0]["id"]
+
+        unlocked_heroes = [target_hero]
+        current_hero_queue.clear()
+        current_hero_id = target_hero
+        selecting_initial_hero = false
 
 func get_hero_definition(hero_id: String) -> Dictionary:
 	for hero in HERO_ROSTER:
