@@ -102,10 +102,10 @@ func _update_selection() -> void:
     move_tween = create_tween()
     move_tween.tween_property(cursor_frame, "position", target_position, CURSOR_MOVE_TIME)
     move_tween.parallel().tween_property(cursor_panel, "position", -cursor_panel.size / 2.0, CURSOR_MOVE_TIME)
+    move_tween.parallel().tween_property(camera, "position", target_position, CURSOR_MOVE_TIME)
     move_tween.set_trans(Tween.TRANS_CUBIC)
     move_tween.set_ease(Tween.EASE_OUT)
 
-    camera.position = target_position
 
 func _select_current_hero() -> void:
     if portrait_entries.is_empty():
