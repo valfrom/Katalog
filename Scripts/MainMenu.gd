@@ -52,6 +52,7 @@ func _activate_current_option() -> void:
             get_tree().quit()
 
 func _start_new_game() -> void:
+    GameManager.start_new_game()
     SceneTransition.load_scene(GameManager.HERO_SELECT_SCENE_PATH)
 
 func _continue_game() -> void:
