@@ -25,17 +25,10 @@ func _on_body_entered(body):
 			AudioManager.level_complete_sfx.play()
 			SceneTransition.load_scene(GameManager.HERO_FOUND_SCENE_PATH)
 			return
-	else:
-		var return_position = self.global_position + Vector2(0, 45)
-		GameManager.save_player_state(get_tree().current_scene.scene_file_path, return_position)
+        else:
+                var return_position = self.global_position + Vector2(0, 45)
+                GameManager.save_player_state(get_tree().current_scene.scene_file_path, return_position)
 
-		if use_hero_select:
-			GameManager.pending_level_scene = next_scene_path
-			get_tree().call_group("Player", "death_tween")
-			AudioManager.level_complete_sfx.play()
-			SceneTransition.load_scene(GameManager.HERO_SELECT_SCENE_PATH)
-			return
-
-	get_tree().call_group("Player", "death_tween") # death_tween is called here just to give the feeling of player entering the door.
-	AudioManager.level_complete_sfx.play()
-	SceneTransition.load_scene(target_scene)
+        get_tree().call_group("Player", "death_tween") # death_tween is called here just to give the feeling of player entering the door.
+        AudioManager.level_complete_sfx.play()
+        SceneTransition.load_scene(target_scene)

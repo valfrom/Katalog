@@ -28,6 +28,8 @@ var current_hero_id: String = ""
 var _active_level_player: Node = null
 var recently_unlocked_hero: String = ""
 var hero_unlock_return_scene: String = ""
+var _initial_hero_selection_active: bool = false
+var _initial_unlock_snapshot: Array[String] = []
 
 func _ready():
 	randomize()
@@ -64,6 +66,11 @@ func unlock_all_heroes() -> void:
         for hero in HERO_ROSTER:
                 unlocked_heroes.append(hero["id"])
 
+func begin_initial_hero_selection() -> void:
+        _initial_unlock_snapshot = unlocked_heroes.duplicate()
+        _initial_hero_selection_active = true
+        unlock_all_heroes()
+
 func get_hero_definition(hero_id: String) -> Dictionary:
 	for hero in HERO_ROSTER:
 		if hero["id"] == hero_id:
@@ -71,9 +78,19 @@ func get_hero_definition(hero_id: String) -> Dictionary:
 	return {}
 
 func prepare_hero_run(selected_hero: String) -> void:
-	_ensure_default_hero()
-	if !unlocked_heroes.has(selected_hero):
-		selected_hero = unlocked_heroes[0]
+        _ensure_default_hero()
+        if !unlocked_heroes.has(selected_hero):
+                selected_hero = unlocked_heroes[0]
+
+        if _initial_hero_selection_active:
+                unlocked_heroes.clear()
+                unlocked_heroes.append(selected_hero)
+                _initial_hero_selection_active = false
+                if _initial_unlock_snapshot.size() > 0:
+                        unlocked_heroes = _initial_unlock_snapshot.duplicate()
+                        if !unlocked_heroes.has(selected_hero):
+                                unlocked_heroes.push_front(selected_hero)
+        _initial_unlock_snapshot.clear()
 
 	current_hero_queue = unlocked_heroes.duplicate()
 	current_hero_queue.erase(selected_hero)
