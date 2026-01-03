@@ -126,7 +126,7 @@ physics_quadrant_size = 64
 
 [node name="SpawnPoint" type="Marker2D" parent="Level" unique_id=1482261080]
 unique_name_in_owner = true
-position = Vector2(142, 510)
+position = Vector2(142, 554)
 
 [node name="GameManager" type="Node2D" parent="." unique_id=270385406]
 script = ExtResource("4_vgfkr")
@@ -141,6 +141,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_66mfc")
+metadata/_edit_use_anchors_ = true
 
 [node name="Score" type="Control" parent="UserInterface/GameUI" unique_id=1609988282]
 unique_name_in_owner = true
