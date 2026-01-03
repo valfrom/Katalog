@@ -28,20 +28,20 @@ func _physics_process(delta: float) -> void:
 	_flip_player()
 
 func _update_animation() -> void:
-        var speed := velocity.length()
-        var moving := speed > 5.0
-        particle_trails.emitting = false
-        if moving:
-                var desired_animation := "boy_walk_left"
-                if abs(velocity.y) > abs(velocity.x) and velocity.y < -1.0:
-                        desired_animation = "boy_walk_up"
-                elif abs(velocity.y) > abs(velocity.x) and velocity.y > 1.0:
-                        desired_animation = "boy_walk_down"
-                if player_sprite.animation != desired_animation or not player_sprite.is_playing():
-                        player_sprite.play(desired_animation)
-        else:
-                if player_sprite.is_playing():
-                        player_sprite.stop()
+		var speed := velocity.length()
+		var moving := speed > 5.0
+		particle_trails.emitting = false
+		if moving:
+				var desired_animation := "boy_walk_left"
+				if abs(velocity.y) > abs(velocity.x) and velocity.y < -1.0:
+						desired_animation = "boy_walk_up"
+				elif abs(velocity.y) > abs(velocity.x) and velocity.y > 1.0:
+						desired_animation = "boy_walk_down"
+				if player_sprite.animation != desired_animation or not player_sprite.is_playing():
+						player_sprite.play(desired_animation)
+		else:
+				if player_sprite.is_playing():
+						player_sprite.stop()
 
 func _flip_player() -> void:
 	if velocity.x < -1.0:

@@ -1,0 +1,84 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cduxxswdlk85n"]
+
+[ext_resource type="Texture2D" uid="uid://v0ujc0e201fg" path="res://Assets/Sprites/boy_sprites.png" id="1_nqtis"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqtis"]
+atlas = ExtResource("1_nqtis")
+region = Rect2(0, 230, 160, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nukg"]
+atlas = ExtResource("1_nqtis")
+region = Rect2(160, 230, 160, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_um1m7"]
+atlas = ExtResource("1_nqtis")
+region = Rect2(320, 230, 160, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_340n0"]
+atlas = ExtResource("1_nqtis")
+region = Rect2(0, 460, 160, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qc04o"]
+atlas = ExtResource("1_nqtis")
+region = Rect2(160, 460, 160, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_si852"]
+atlas = ExtResource("1_nqtis")
+region = Rect2(320, 460, 160, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxg6p"]
+atlas = ExtResource("1_nqtis")
+region = Rect2(0, 0, 160, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ftswu"]
+atlas = ExtResource("1_nqtis")
+region = Rect2(160, 0, 160, 230)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qb8wk"]
+atlas = ExtResource("1_nqtis")
+region = Rect2(320, 0, 160, 230)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nqtis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nukg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um1m7")
+}],
+"loop": true,
+"name": &"boy_walk_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_340n0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qc04o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_si852")
+}],
+"loop": true,
+"name": &"boy_walk_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxg6p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ftswu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qb8wk")
+}],
+"loop": true,
+"name": &"boy_walk_up",
+"speed": 5.0
+}]
