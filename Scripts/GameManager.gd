@@ -7,15 +7,9 @@ signal hero_changed(hero_id)
 const HERO_SELECT_SCENE_PATH := "res://Scenes/HeroSelect/HeroSelect.tscn"
 const HERO_FOUND_SCENE_PATH := "res://Scenes/HeroSelect/HeroFound.tscn"
 const HERO_LIVES := 3
+const PORTRAIT_DIR_PATH := "res://Assets/Sprites/Portraits"
 
-const HERO_ROSTER := [
-    {"id": "scarlet", "name": "Scarlet", "color": Color(0.91, 0.26, 0.32), "portrait_path": "res://Assets/Sprites/Portraits/Pirate.png"},
-    {"id": "bolt", "name": "Bolt", "color": Color(0.97, 0.71, 0.2), "portrait_path": "res://Assets/Sprites/Portraits/Mechanic.png"},
-    {"id": "ivy", "name": "Ivy", "color": Color(0.32, 0.73, 0.39), "portrait_path": "res://Assets/Sprites/Portraits/Mage.png"},
-    {"id": "frost", "name": "Frost", "color": Color(0.4, 0.71, 0.93), "portrait_path": "res://Assets/Sprites/Portraits/Cyborg.png"},
-    {"id": "ember", "name": "Ember", "color": Color(0.93, 0.48, 0.32), "portrait_path": "res://Assets/Sprites/Portraits/Ranger.png"},
-    {"id": "void", "name": "Void", "color": Color(0.65, 0.58, 0.9), "portrait_path": "res://Assets/Sprites/Portraits/Vampire.png"}
-]
+var HERO_ROSTER: Array = []
 
 var score: int = 0
 var saved_scene_path: String = ""
@@ -34,8 +28,53 @@ var selecting_initial_hero: bool = false
 var discovered_levels: Array[String] = []
 
 func _ready():
+    _build_hero_roster()
     randomize()
     _ensure_default_hero()
+
+func _build_hero_roster() -> void:
+    HERO_ROSTER.clear()
+
+    var portraits := DirAccess.open(PORTRAIT_DIR_PATH)
+    if portraits == null:
+        push_warning("Could not open portraits directory: %s" % PORTRAIT_DIR_PATH)
+        return
+
+    portraits.list_dir_begin()
+    while true:
+        var file_name := portraits.get_next()
+        if file_name == "":
+            break
+        if portraits.current_is_dir():
+            continue
+        if !file_name.to_lower().ends_with(".png"):
+            continue
+
+        var base_name := file_name.get_basename()
+        var hero_id := base_name.to_lower()
+        HERO_ROSTER.append({
+            "id": hero_id,
+            "name": base_name,
+            "portrait_path": "%s/%s" % [PORTRAIT_DIR_PATH, file_name],
+            "color": _color_from_name(hero_id)
+        })
+
+    portraits.list_dir_end()
+    HERO_ROSTER.sort_custom(Callable(self, "_sort_heroes_by_name"))
+
+func _sort_heroes_by_name(a: Dictionary, b: Dictionary) -> bool:
+    return a.get("name", "") < b.get("name", "")
+
+func _color_from_name(hero_id: String) -> Color:
+    var hash_value = abs(hash(hero_id))
+    var hue := float(hash_value % 360) / 360.0
+    var saturation = clamp(0.6 + float((hash_value / 360) % 40) / 100.0, 0.6, 0.95)
+    return Color.from_hsv(hue, saturation, 0.9)
+
+func _get_starting_hero_id() -> String:
+    if HERO_ROSTER.is_empty():
+        return ""
+    return HERO_ROSTER[0].get("id", "")
 
 # Adds 1 to score variable
 func add_score():
@@ -59,12 +98,18 @@ func consume_restore_flag() -> bool:
     return should_restore
 
 func _ensure_default_hero() -> void:
+    var starting_hero := _get_starting_hero_id()
+    if starting_hero == "":
+        return
+
     if unlocked_heroes.is_empty():
-        unlocked_heroes.append(HERO_ROSTER[0]["id"])
-        current_hero_id = HERO_ROSTER[0]["id"]
+        unlocked_heroes.append(starting_hero)
+        current_hero_id = starting_hero
 
 func start_new_game() -> void:
-    var starting_hero := HERO_ROSTER[0]["id"]
+    var starting_hero := _get_starting_hero_id()
+    if starting_hero == "":
+        return
 
     unlocked_heroes.clear()
     unlocked_heroes.append(starting_hero)
@@ -86,7 +131,9 @@ func finalize_initial_hero_selection(hero_id: String) -> void:
 
     var target_hero := hero_id
     if get_hero_definition(target_hero).is_empty():
-        target_hero = HERO_ROSTER[0]["id"]
+        target_hero = _get_starting_hero_id()
+    if target_hero == "":
+        return
 
     unlocked_heroes = [target_hero]
     current_hero_queue.clear()
