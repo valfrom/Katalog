@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://12yssag0vuvj"]
+[gd_scene format=3 uid="uid://12yssag0vuvj"]
 
-[ext_resource type="Script" uid="uid://5ldx502qrwkw" path="res://Scripts/TopDownPlayer.gd" id="1_bqyoq"]
-[ext_resource type="SpriteFrames" uid="uid://5s1x5qjduyuv" path="res://Assets/Sprites/black_cat.tres" id="2_v1l4e"]
+[ext_resource type="Script" uid="uid://y22wdbrk2ucp" path="res://Scripts/TopDownPlayer.gd" id="1_bqyoq"]
+[ext_resource type="SpriteFrames" uid="uid://cduxxswdlk85n" path="res://Assets/Sprites/boy.tres" id="2_xvtk5"]
 [ext_resource type="Texture2D" uid="uid://dxp77wq60c2rr" path="res://Assets/Textures/CloudTexture.png" id="3_8vxmb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n4sts"]
@@ -19,24 +19,25 @@ point_count = 3
 offsets = PackedFloat32Array(0.25, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
 
-[node name="Player" type="CharacterBody2D" groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=1737942838 groups=["Player"]]
 script = ExtResource("1_bqyoq")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("2_v1l4e")
-animation = &"idle"
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1034234299]
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("2_xvtk5")
+animation = &"boy_walk_up"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=947904091]
 position = Vector2(3, -4)
 shape = SubResource("CapsuleShape2D_n4sts")
 
-[node name="Collision" type="Area2D" parent="."]
+[node name="Collision" type="Area2D" parent="." unique_id=1544567974]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision" unique_id=1263188993]
 position = Vector2(-1.5, 5)
 shape = SubResource("RectangleShape2D_tvbjh")
 
-[node name="ParticleTrails" type="CPUParticles2D" parent="."]
+[node name="ParticleTrails" type="CPUParticles2D" parent="." unique_id=1951533285]
 position = Vector2(0, 32)
 emitting = false
 amount = 20
@@ -54,7 +55,7 @@ scale_amount_max = 0.15
 scale_amount_curve = SubResource("Curve_m2jh0")
 color_ramp = SubResource("Gradient_3gc37")
 
-[node name="DeathParticles" type="CPUParticles2D" parent="."]
+[node name="DeathParticles" type="CPUParticles2D" parent="." unique_id=1884649272]
 position = Vector2(-1, 15)
 emitting = false
 amount = 20
