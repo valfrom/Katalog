@@ -53,7 +53,11 @@ func _activate_current_option() -> void:
 
 func _start_new_game() -> void:
 	GameManager.start_new_game()
-	SceneTransition.load_scene(GameManager.HERO_SELECT_SCENE_PATH)
+	GameManager.prepare_hero_run(GameManager.current_hero_id)
+	var target_scene := GameManager.pending_level_scene
+	if target_scene.is_empty():
+		target_scene = "res://Scenes/Maps/Map_01.tscn"
+	SceneTransition.load_scene(target_scene)
 
 func _continue_game() -> void:
 	var target_scene = GameManager.saved_scene_path
