@@ -26,6 +26,9 @@ func _update_hero_display() -> void:
     hero_lives_label.text = "Lives: %d" % lives
 
 func _populate_available_hero_icons() -> void:
+    if available_heroes_icons == null:
+        return
+
     for child in available_heroes_icons.get_children():
         child.queue_free()
 
