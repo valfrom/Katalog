@@ -241,6 +241,17 @@ func _ensure_hero_lives_initialized() -> void:
         if not hero_lives.has(hero_id):
             hero_lives[hero_id] = HERO_LIVES
 
+func get_hero_lives(hero_id: String) -> int:
+    _ensure_hero_lives_initialized()
+
+    if hero_id == "":
+        return 0
+
+    if hero_lives.has(hero_id):
+        return hero_lives[hero_id]
+
+    return 0
+
 func _decrement_hero_life(hero_id: String) -> int:
     if hero_id == "":
         return 0

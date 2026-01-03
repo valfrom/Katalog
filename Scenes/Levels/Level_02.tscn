@@ -171,3 +171,29 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("8_gwcy2")
 theme_override_font_sizes/font_size = 32
 text = "x 3"
+
+[node name="HeroHUD" type="VBoxContainer" parent="UserInterface/GameUI" unique_id=1222334456]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 152.0
+offset_top = 16.0
+offset_right = 392.0
+offset_bottom = 136.0
+
+[node name="CurrentHeroLabel" type="Label" parent="UserInterface/GameUI/HeroHUD" unique_id=989799143]
+unique_name_in_owner = true
+theme_override_fonts/font = ExtResource("8_gwcy2")
+theme_override_font_sizes/font_size = 24
+text = "Hero: None"
+
+[node name="AvailableHeroesLabel" type="Label" parent="UserInterface/GameUI/HeroHUD" unique_id=1603406518]
+unique_name_in_owner = true
+theme_override_fonts/font = ExtResource("8_gwcy2")
+theme_override_font_sizes/font_size = 24
+text = "Available: None"
+
+[node name="HeroLivesLabel" type="Label" parent="UserInterface/GameUI/HeroHUD" unique_id=1437933801]
+unique_name_in_owner = true
+theme_override_fonts/font = ExtResource("8_gwcy2")
+theme_override_font_sizes/font_size = 24
+text = "Lives: 0"
