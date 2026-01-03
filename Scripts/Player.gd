@@ -251,3 +251,4 @@ func _on_collision_body_entered(_body) -> void:
     if _body.is_in_group("Traps"):
         AudioManager.death_sfx.play()
         death_particles.emitting = true
+        await GameManager.handle_level_player_death(self)
