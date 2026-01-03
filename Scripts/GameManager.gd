@@ -197,6 +197,13 @@ func handle_level_player_death(player: Node) -> void:
         await player.play_respawn()
         return
 
+    if _should_show_hero_select_on_death():
+        pending_level_scene = saved_scene_path if saved_scene_path != "" else get_tree().current_scene.scene_file_path
+        if saved_scene_path != "":
+            mark_restore_player_position()
+        SceneTransition.load_scene(HERO_SELECT_SCENE_PATH)
+        return
+
     if advance_to_next_hero():
         _apply_current_hero(current_hero_id)
         await player.play_respawn()
@@ -250,3 +257,6 @@ func _decrement_hero_life(hero_id: String) -> int:
 
     hero_lives[hero_id] -= 1
     return hero_lives[hero_id]
+
+func _should_show_hero_select_on_death() -> bool:
+    return unlocked_heroes.size() > 1 and hero_lives.get(current_hero_id, 0) <= 0
