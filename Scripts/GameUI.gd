@@ -2,7 +2,7 @@ extends Control
 
 @onready var score_texture = %ScoreTexture
 @onready var score_label = %ScoreLabel
-@onready var current_hero_label = %CurrentHeroLabel
+@onready var current_hero_icon = %CurrentHeroIcon
 @onready var hero_lives_label = %HeroLivesLabel
 @onready var available_heroes_icons = %AvailableHeroesIcons
 
@@ -18,12 +18,16 @@ func _update_hero_display() -> void:
     var hero_name := "None"
     if not hero_definition.is_empty():
         hero_name = hero_definition.get("name", GameManager.current_hero_id.capitalize())
-    current_hero_label.text = "Hero: %s" % hero_name
+
+    var hero_portrait := _get_hero_portrait(GameManager.current_hero_id, hero_definition)
+    if current_hero_icon != null:
+        current_hero_icon.texture = hero_portrait if hero_portrait != null else score_texture.texture
+        current_hero_icon.tooltip_text = hero_name
 
     _populate_available_hero_icons()
 
     var lives := GameManager.get_hero_lives(GameManager.current_hero_id)
-    hero_lives_label.text = "Lives: %d" % lives
+    hero_lives_label.text = "x %d" % lives
 
 func _populate_available_hero_icons() -> void:
     if available_heroes_icons == null:

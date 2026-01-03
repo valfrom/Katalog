@@ -181,11 +181,23 @@ offset_top = 16.0
 offset_right = 392.0
 offset_bottom = 136.0
 
-[node name="CurrentHeroLabel" type="Label" parent="UserInterface/GameUI/HeroHUD" unique_id=989799143]
+[node name="CurrentHeroDisplay" type="HBoxContainer" parent="UserInterface/GameUI/HeroHUD" unique_id=989799143]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CurrentHeroIcon" type="TextureRect" parent="UserInterface/GameUI/HeroHUD/CurrentHeroDisplay" unique_id=986737185]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+expand_mode = 2
+stretch_mode = 5
+size_flags_horizontal = 2
+size_flags_vertical = 0
+
+[node name="HeroLivesLabel" type="Label" parent="UserInterface/GameUI/HeroHUD/CurrentHeroDisplay" unique_id=1437933801]
 unique_name_in_owner = true
 theme_override_fonts/font = ExtResource("8_gwcy2")
 theme_override_font_sizes/font_size = 24
-text = "Hero: None"
+text = "x 0"
 
 [node name="AvailableHeroes" type="HBoxContainer" parent="UserInterface/GameUI/HeroHUD" unique_id=1603406518]
 layout_mode = 2
@@ -200,8 +212,3 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="HeroLivesLabel" type="Label" parent="UserInterface/GameUI/HeroHUD" unique_id=1437933801]
-unique_name_in_owner = true
-theme_override_fonts/font = ExtResource("8_gwcy2")
-theme_override_font_sizes/font_size = 24
-text = "Lives: 0"
