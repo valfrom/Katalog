@@ -186,11 +186,18 @@ theme_override_fonts/font = ExtResource("8_gwcy2")
 theme_override_font_sizes/font_size = 24
 text = "Hero: None"
 
-[node name="AvailableHeroesLabel" type="Label" parent="UserInterface/GameUI/HeroHUD" unique_id=1603406518]
-unique_name_in_owner = true
+[node name="AvailableHeroes" type="HBoxContainer" parent="UserInterface/GameUI/HeroHUD" unique_id=1603406518]
+layout_mode = 2
+
+[node name="AvailableLabel" type="Label" parent="UserInterface/GameUI/HeroHUD/AvailableHeroes" unique_id=1506195328]
 theme_override_fonts/font = ExtResource("8_gwcy2")
 theme_override_font_sizes/font_size = 24
-text = "Available: None"
+text = "Available:"
+
+[node name="AvailableHeroesIcons" type="HBoxContainer" parent="UserInterface/GameUI/HeroHUD/AvailableHeroes" unique_id=479448585]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
 
 [node name="HeroLivesLabel" type="Label" parent="UserInterface/GameUI/HeroHUD" unique_id=1437933801]
 unique_name_in_owner = true
