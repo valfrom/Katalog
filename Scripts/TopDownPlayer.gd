@@ -32,7 +32,12 @@ func _update_animation() -> void:
 		var moving := speed > 5.0
 		particle_trails.emitting = false
 		if moving:
-				player_sprite.play("walk")
+				if abs(velocity.y) > abs(velocity.x) and velocity.y < -1.0:
+						player_sprite.play("boy_walk_up")
+				elif abs(velocity.y) > abs(velocity.x) and velocity.y > 1.0:
+						player_sprite.play("boy_walk_down")
+				else:
+						player_sprite.play("boy_walk_left")
 		else:
 				player_sprite.play("idle")
 
