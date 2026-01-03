@@ -235,6 +235,8 @@ func play_respawn() -> void:
     AudioManager.respawn_sfx.play()
     var tween = create_tween()
     tween.tween_property(self, "scale", originalScale, 0.15)
+    await tween.finished
+    velocity = Vector2.ZERO
 
 func apply_hero(hero: Dictionary) -> void:
     hero_id = hero.get("id", "")
