@@ -234,7 +234,9 @@ func death_tween() -> void:
     _reset_motion_state()
 
 func play_respawn() -> void:
+    global_position = spawn_point.global_position
     _reset_motion_state()
+    scale = Vector2.ZERO
     await get_tree().create_timer(0.3).timeout
     AudioManager.respawn_sfx.play()
     var tween = create_tween()
