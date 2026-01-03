@@ -66,9 +66,9 @@ func _sort_heroes_by_name(a: Dictionary, b: Dictionary) -> bool:
     return a.get("name", "") < b.get("name", "")
 
 func _color_from_name(hero_id: String) -> Color:
-    var hash_value := abs(hash(hero_id))
+    var hash_value = abs(hash(hero_id))
     var hue := float(hash_value % 360) / 360.0
-    var saturation := clamp(0.6 + float((hash_value / 360) % 40) / 100.0, 0.6, 0.95)
+    var saturation = clamp(0.6 + float((hash_value / 360) % 40) / 100.0, 0.6, 0.95)
     return Color.from_hsv(hue, saturation, 0.9)
 
 func _get_starting_hero_id() -> String:
