@@ -1,10 +1,10 @@
 extends Control
 
-@onready var score_texture = %Score/ScoreTexture
-@onready var score_label = %Score/ScoreLabel
-@onready var current_hero_label = %HeroHUD/CurrentHeroLabel
-@onready var hero_lives_label = %HeroHUD/HeroLivesLabel
-@onready var available_heroes_icons = %HeroHUD/AvailableHeroesIcons
+@onready var score_texture = %ScoreTexture
+@onready var score_label = %ScoreLabel
+@onready var current_hero_label = %CurrentHeroLabel
+@onready var hero_lives_label = %HeroLivesLabel
+@onready var available_heroes_icons = %AvailableHeroesIcons
 
 func _ready():
     _update_hero_display()
