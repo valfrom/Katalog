@@ -12,61 +12,61 @@ extends CharacterBody2D
 @onready var original_scale: Vector2 = self.scale
 
 func _ready() -> void:
-	randomize()
-	if GameManager.consume_restore_flag():
-		global_position = GameManager.saved_player_position
-	else:
-		global_position = spawn_point.global_position
+    randomize()
+    if GameManager.consume_restore_flag():
+        global_position = GameManager.saved_player_position
+    else:
+        global_position = spawn_point.global_position
 
 func _physics_process(delta: float) -> void:
-	var input_dir := Input.get_vector("Left", "Right", "Up", "Down")
-	var target_velocity := input_dir.normalized() * move_speed
-	var accel := acceleration if input_dir != Vector2.ZERO else deceleration
-	velocity = velocity.move_toward(target_velocity, accel * delta)
-	move_and_slide()
-	_update_animation()
-	_flip_player()
+    var input_dir := Input.get_vector("Left", "Right", "Up", "Down")
+    var target_velocity := input_dir.normalized() * move_speed
+    var accel := acceleration if input_dir != Vector2.ZERO else deceleration
+    velocity = velocity.move_toward(target_velocity, accel * delta)
+    move_and_slide()
+    _update_animation()
+    _flip_player()
 
 func _update_animation() -> void:
-		var speed := velocity.length()
-		var moving := speed > 5.0
-		particle_trails.emitting = false
-		if moving:
-				var desired_animation := "boy_walk_left"
-				if abs(velocity.y) > abs(velocity.x) and velocity.y < -1.0:
-						desired_animation = "boy_walk_up"
-				elif abs(velocity.y) > abs(velocity.x) and velocity.y > 1.0:
-						desired_animation = "boy_walk_down"
-				if player_sprite.animation != desired_animation or not player_sprite.is_playing():
-						player_sprite.play(desired_animation)
-		else:
-				if player_sprite.is_playing():
-						player_sprite.stop()
+        var speed := velocity.length()
+        var moving := speed > 5.0
+        particle_trails.emitting = false
+        if moving:
+                var desired_animation := "boy_walk_left"
+                if abs(velocity.y) > abs(velocity.x) and velocity.y < -1.0:
+                        desired_animation = "boy_walk_up"
+                elif abs(velocity.y) > abs(velocity.x) and velocity.y > 1.0:
+                        desired_animation = "boy_walk_down"
+                if player_sprite.animation != desired_animation or not player_sprite.is_playing():
+                        player_sprite.play(desired_animation)
+        else:
+                if player_sprite.is_playing():
+                        player_sprite.stop()
 
 func _flip_player() -> void:
-	if velocity.x < -1.0:
-		player_sprite.flip_h = false
-	elif velocity.x > 1.0:
-		player_sprite.flip_h = true
+    if velocity.x < -1.0:
+        player_sprite.flip_h = false
+    elif velocity.x > 1.0:
+        player_sprite.flip_h = true
 
 func death_tween() -> void:
-	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2.ZERO, 0.15)
-	await tween.finished
-	global_position = spawn_point.global_position
-	await get_tree().create_timer(0.3).timeout
-	AudioManager.respawn_sfx.play()
-	respawn_tween()
+    var tween = create_tween()
+    tween.tween_property(self, "scale", Vector2.ZERO, 0.15)
+    await tween.finished
+    global_position = spawn_point.global_position
+    await get_tree().create_timer(0.3).timeout
+    AudioManager.respawn_sfx.play()
+    respawn_tween()
 
 func respawn_tween() -> void:
-	global_position = spawn_point.global_position
-	var tween = create_tween()
-	tween.stop()
-	tween.play()
-	tween.tween_property(self, "scale", original_scale, 0.15)
+    global_position = spawn_point.global_position
+    var tween = create_tween()
+    tween.stop()
+    tween.play()
+    tween.tween_property(self, "scale", original_scale, 0.15)
 
 func _on_collision_body_entered(_body) -> void:
-	if _body.is_in_group("Traps"):
-		AudioManager.death_sfx.play()
-		death_particles.emitting = true
-		death_tween()
+    if _body.is_in_group("Traps"):
+        AudioManager.death_sfx.play()
+        death_particles.emitting = true
+        death_tween()
